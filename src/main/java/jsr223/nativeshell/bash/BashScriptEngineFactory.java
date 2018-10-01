@@ -5,6 +5,7 @@ import jsr223.nativeshell.NativeShellScriptEngine;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineFactory;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,7 +42,7 @@ public class BashScriptEngineFactory implements ScriptEngineFactory {
 
     @Override
     public List<String> getExtensions() {
-        return asList("sh", "bash");
+        return Collections.singletonList("bash");
     }
 
     @Override
@@ -51,7 +52,7 @@ public class BashScriptEngineFactory implements ScriptEngineFactory {
 
     @Override
     public List<String> getNames() {
-        return asList("bash", "sh", "Bash");
+        return asList("bash", "Bash");
     }
 
     @Override

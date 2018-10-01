@@ -13,7 +13,7 @@ public class BashScriptEngineFactoryTest {
     public void testBashScriptEngineIsFound() {
         ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
 
-        assertNotNull(scriptEngineManager.getEngineByExtension("sh"));
+        assertNotNull(scriptEngineManager.getEngineByExtension("bash"));
         assertNotNull(scriptEngineManager.getEngineByName("bash"));
         assertNotNull(scriptEngineManager.getEngineByMimeType("application/x-bash"));
         assertNotNull(scriptEngineManager.getEngineByMimeType("application/x-sh"));
@@ -21,7 +21,7 @@ public class BashScriptEngineFactoryTest {
 
     @Test
     public void testBashScriptEngineVersions() {
-        ScriptEngine bashScriptEngine = new ScriptEngineManager().getEngineByExtension("sh");
+        ScriptEngine bashScriptEngine = new ScriptEngineManager().getEngineByExtension("bash");
 
         assertNotNull(bashScriptEngine.getFactory().getEngineVersion());
         assertNotNull(bashScriptEngine.getFactory().getLanguageVersion());
