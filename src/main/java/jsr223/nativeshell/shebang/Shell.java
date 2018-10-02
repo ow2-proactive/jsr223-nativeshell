@@ -18,12 +18,12 @@ public class Shell implements NativeShell {
 
     @Override
     public String getInstalledVersionCommand() {
-        return null;
+        return "Not available";
     }
 
     @Override
     public String getMajorVersionCommand() {
-        return null;
+        return "Not available";
     }
 
     @Override
@@ -33,6 +33,6 @@ public class Shell implements NativeShell {
 
     @Override
     public String getFileExtension() {
-        return null;
+        return ".sh";
     }
 }

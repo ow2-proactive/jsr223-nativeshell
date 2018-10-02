@@ -32,6 +32,6 @@ public class Bash implements NativeShell {
 
     @Override
     public String getFileExtension() {
-        return ".sh";
+        return ".bash";
     }
 }
