@@ -1,4 +1,4 @@
-package jsr223.nativeshell.shebang;
+package jsr223.nativeshell.shell;
 
 import static java.util.Arrays.asList;
 

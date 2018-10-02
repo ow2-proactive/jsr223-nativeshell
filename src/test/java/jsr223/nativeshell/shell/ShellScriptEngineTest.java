@@ -13,7 +13,6 @@ import org.junit.Test;
 
 import jsr223.nativeshell.NativeShellRunner;
 import jsr223.nativeshell.NativeShellScriptEngine;
-import jsr223.nativeshell.shebang.Shell;
 
 
 public class ShellScriptEngineTest {
