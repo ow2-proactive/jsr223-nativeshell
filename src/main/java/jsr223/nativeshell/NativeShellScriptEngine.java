@@ -1,9 +1,36 @@
+/*
+ * ProActive Parallel Suite(TM):
+ * The Open Source library for parallel and distributed
+ * Workflows & Scheduling, Orchestration, Cloud Automation
+ * and Big Data Analysis on Enterprise Grids & Clouds.
+ *
+ * Copyright (c) 2007 - 2017 ActiveEon
+ * Contact: contact@activeeon.com
+ *
+ * This library is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU Affero General Public License
+ * as published by the Free Software Foundation: version 3 of
+ * the License.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * If needed, contact us to obtain a release under GPL Version 2 or 3
+ * or a different license than the AGPL.
+ */
 package jsr223.nativeshell;
 
-import javax.script.*;
 import java.io.Reader;
 import java.io.Serializable;
 import java.util.Map;
+
+import javax.script.*;
+
 
 public class NativeShellScriptEngine extends AbstractScriptEngine {
 
@@ -27,7 +54,8 @@ public class NativeShellScriptEngine extends AbstractScriptEngine {
     public Object eval(String script, ScriptContext context) throws ScriptException {
         int exitValue = new NativeShellRunner(nativeShell).run(script, context);
         if (context.getBindings(ScriptContext.ENGINE_SCOPE).containsKey(VARIABLES_BINDING_NAME)) {
-            Map<String, Serializable> variables = (Map<String, Serializable>) context.getBindings(ScriptContext.ENGINE_SCOPE).get(VARIABLES_BINDING_NAME);
+            Map<String, Serializable> variables = (Map<String, Serializable>) context.getBindings(ScriptContext.ENGINE_SCOPE)
+                                                                                     .get(VARIABLES_BINDING_NAME);
             variables.put(EXIT_VALUE_BINDING_NAME, exitValue);
         }
         context.getBindings(ScriptContext.ENGINE_SCOPE).put(EXIT_VALUE_BINDING_NAME, exitValue);

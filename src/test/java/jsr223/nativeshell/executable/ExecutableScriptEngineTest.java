@@ -1,24 +1,54 @@
+/*
+ * ProActive Parallel Suite(TM):
+ * The Open Source library for parallel and distributed
+ * Workflows & Scheduling, Orchestration, Cloud Automation
+ * and Big Data Analysis on Enterprise Grids & Clouds.
+ *
+ * Copyright (c) 2007 - 2017 ActiveEon
+ * Contact: contact@activeeon.com
+ *
+ * This library is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU Affero General Public License
+ * as published by the Free Software Foundation: version 3 of
+ * the License.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * If needed, contact us to obtain a release under GPL Version 2 or 3
+ * or a different license than the AGPL.
+ */
 package jsr223.nativeshell.executable;
-
-import jsr223.nativeshell.NativeShellRunner;
-import jsr223.nativeshell.NativeShellScriptEngine;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
-import javax.script.Bindings;
-import javax.script.ScriptException;
-import java.io.*;
-import java.util.HashMap;
 
 import static java.util.Collections.singletonList;
 import static java.util.Collections.singletonMap;
 import static org.junit.Assert.*;
 
+import java.io.*;
+import java.util.HashMap;
+
+import javax.script.Bindings;
+import javax.script.ScriptException;
+
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import jsr223.nativeshell.NativeShellRunner;
+import jsr223.nativeshell.NativeShellScriptEngine;
+
+
 public class ExecutableScriptEngineTest {
 
     private ExecutableScriptEngine scriptEngine;
+
     private StringWriter scriptOutput;
+
     private StringWriter scriptError;
 
     @BeforeClass
@@ -148,7 +178,7 @@ public class ExecutableScriptEngineTest {
     @Test
     public void collection_bindings() throws Exception {
         Bindings bindings = scriptEngine.createBindings();
-        bindings.put("array", new String[]{"one", "two"});
+        bindings.put("array", new String[] { "one", "two" });
         bindings.put("long_array", "a a a a a a a a a a b".split(" "));
         bindings.put("list", singletonList("l1"));
         bindings.put("map", singletonMap("key", "value"));

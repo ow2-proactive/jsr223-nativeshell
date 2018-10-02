@@ -1,14 +1,41 @@
+/*
+ * ProActive Parallel Suite(TM):
+ * The Open Source library for parallel and distributed
+ * Workflows & Scheduling, Orchestration, Cloud Automation
+ * and Big Data Analysis on Enterprise Grids & Clouds.
+ *
+ * Copyright (c) 2007 - 2017 ActiveEon
+ * Contact: contact@activeeon.com
+ *
+ * This library is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU Affero General Public License
+ * as published by the Free Software Foundation: version 3 of
+ * the License.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * If needed, contact us to obtain a release under GPL Version 2 or 3
+ * or a different license than the AGPL.
+ */
 package jsr223.nativeshell.executable;
+
+import static jsr223.nativeshell.IOUtils.pipe;
+import static jsr223.nativeshell.StringUtils.toEmptyStringIfNull;
+
+import java.io.*;
+import java.util.*;
+
+import javax.script.*;
 
 import jsr223.nativeshell.IOUtils;
 import jsr223.nativeshell.NativeShellScriptEngine;
 
-import javax.script.*;
-import java.io.*;
-import java.util.*;
-
-import static jsr223.nativeshell.IOUtils.pipe;
-import static jsr223.nativeshell.StringUtils.toEmptyStringIfNull;
 
 public class ExecutableScriptEngine extends AbstractScriptEngine {
 
@@ -40,11 +67,14 @@ public class ExecutableScriptEngine extends AbstractScriptEngine {
 
             int exitValue = process.exitValue();
 
-            if (scriptContext.getBindings(ScriptContext.ENGINE_SCOPE).containsKey(NativeShellScriptEngine.VARIABLES_BINDING_NAME)) {
-                Map<String, Serializable> variables = (Map<String, Serializable>) scriptContext.getBindings(ScriptContext.ENGINE_SCOPE).get(NativeShellScriptEngine.VARIABLES_BINDING_NAME);
+            if (scriptContext.getBindings(ScriptContext.ENGINE_SCOPE)
+                             .containsKey(NativeShellScriptEngine.VARIABLES_BINDING_NAME)) {
+                Map<String, Serializable> variables = (Map<String, Serializable>) scriptContext.getBindings(ScriptContext.ENGINE_SCOPE)
+                                                                                               .get(NativeShellScriptEngine.VARIABLES_BINDING_NAME);
                 variables.put(NativeShellScriptEngine.EXIT_VALUE_BINDING_NAME, exitValue);
             }
-            scriptContext.getBindings(ScriptContext.ENGINE_SCOPE).put(NativeShellScriptEngine.EXIT_VALUE_BINDING_NAME, exitValue);
+            scriptContext.getBindings(ScriptContext.ENGINE_SCOPE).put(NativeShellScriptEngine.EXIT_VALUE_BINDING_NAME,
+                                                                      exitValue);
             if (exitValue != 0) {
                 throw new ScriptException("Command execution failed with exit code " + exitValue);
             }
@@ -96,11 +126,13 @@ public class ExecutableScriptEngine extends AbstractScriptEngine {
 
     private void addMapBindingAsEnvironmentVariable(String bindingKey, Map<?, ?> bindingValue, Bindings bindings) {
         for (Map.Entry<?, ?> entry : ((Map<?, ?>) bindingValue).entrySet()) {
-            bindings.put(bindingKey + "_" + entry.getKey(), (entry.getValue() == null ? "" : toEmptyStringIfNull(entry.getValue())));
+            bindings.put(bindingKey + "_" + entry.getKey(),
+                         (entry.getValue() == null ? "" : toEmptyStringIfNull(entry.getValue())));
         }
     }
 
-    private void addCollectionBindingAsEnvironmentVariable(String bindingKey, Collection bindingValue, Bindings bindings) {
+    private void addCollectionBindingAsEnvironmentVariable(String bindingKey, Collection bindingValue,
+            Bindings bindings) {
         Object[] bindingValueAsArray = bindingValue.toArray();
         addArrayBindingAsEnvironmentVariable(bindingKey, bindingValueAsArray, bindings);
     }

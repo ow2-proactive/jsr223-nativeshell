@@ -1,8 +1,27 @@
+buildscript {
+    repositories {
+        jcenter()
+
+        maven { url "https://plugins.gradle.org/m2/" }
+        maven { url 'http://repository.activeeon.com/content/groups/proactive/' }
+    }
+
+    dependencies {
+        classpath "com.diffplug.gradle.spotless:spotless:2.4.0"
+        classpath "org.ow2.proactive:coding-rules:1.0.0"
+
+        delete "gradle/ext"
+        ant.unjar src: configurations.classpath.find { it.name.startsWith("coding-rules") }, dest: 'gradle/ext'
+    }
+}
+
 apply plugin: 'java'
 apply plugin: 'maven'
+apply from: "$rootDir/gradle/ext/coding-format.gradle"
 
 sourceCompatibility = JavaVersion.VERSION_1_7
 targetCompatibility = JavaVersion.VERSION_1_8
+
 
 // Configure the maven repository deployment
 install {

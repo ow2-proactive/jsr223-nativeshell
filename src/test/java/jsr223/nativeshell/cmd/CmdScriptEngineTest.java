@@ -1,26 +1,56 @@
+/*
+ * ProActive Parallel Suite(TM):
+ * The Open Source library for parallel and distributed
+ * Workflows & Scheduling, Orchestration, Cloud Automation
+ * and Big Data Analysis on Enterprise Grids & Clouds.
+ *
+ * Copyright (c) 2007 - 2017 ActiveEon
+ * Contact: contact@activeeon.com
+ *
+ * This library is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU Affero General Public License
+ * as published by the Free Software Foundation: version 3 of
+ * the License.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * If needed, contact us to obtain a release under GPL Version 2 or 3
+ * or a different license than the AGPL.
+ */
 package jsr223.nativeshell.cmd;
 
-import jsr223.nativeshell.NativeShellRunner;
-import jsr223.nativeshell.NativeShellScriptEngine;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
+import static org.junit.Assert.*;
+import static org.junit.Assume.assumeTrue;
+
+import java.io.StringReader;
+import java.io.StringWriter;
 
 import javax.script.ScriptContext;
 import javax.script.ScriptEngine;
 import javax.script.SimpleBindings;
 import javax.script.SimpleScriptContext;
-import java.io.StringReader;
-import java.io.StringWriter;
 
-import static org.junit.Assert.*;
-import static org.junit.Assume.assumeTrue;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Ignore;
+import org.junit.Test;
+
+import jsr223.nativeshell.NativeShellRunner;
+import jsr223.nativeshell.NativeShellScriptEngine;
+
 
 public class CmdScriptEngineTest {
 
     private NativeShellScriptEngine scriptEngine;
+
     private StringWriter scriptOutput;
+
     private StringWriter scriptError;
 
     private static String nl = System.lineSeparator();
@@ -44,7 +74,8 @@ public class CmdScriptEngineTest {
         Integer returnCode = (Integer) scriptEngine.eval("echo hello");
 
         assertEquals(NativeShellRunner.RETURN_CODE_OK, returnCode);
-        assertEquals(NativeShellRunner.RETURN_CODE_OK, scriptEngine.get(NativeShellScriptEngine.EXIT_VALUE_BINDING_NAME));
+        assertEquals(NativeShellRunner.RETURN_CODE_OK,
+                     scriptEngine.get(NativeShellScriptEngine.EXIT_VALUE_BINDING_NAME));
         assertEquals("hello" + nl, scriptOutput.toString());
     }
 
@@ -59,7 +90,8 @@ public class CmdScriptEngineTest {
         }
         assertTrue(exceptionThrown);
         assertNull(returnCode);
-        assertNotEquals(NativeShellRunner.RETURN_CODE_OK, scriptEngine.get(NativeShellScriptEngine.EXIT_VALUE_BINDING_NAME));
+        assertNotEquals(NativeShellRunner.RETURN_CODE_OK,
+                        scriptEngine.get(NativeShellScriptEngine.EXIT_VALUE_BINDING_NAME));
         assertTrue(scriptError.toString().length() > 0);
         // Disabled the following check as it is language-specific
         //assertEquals("cmd: nonexistingcommandwhatsoever: command not found" + nl, scriptError.toString());
@@ -76,7 +108,8 @@ public class CmdScriptEngineTest {
         Integer returnCode = (Integer) bashScriptEngine.eval("echo %string% %integer% %float%");
 
         assertEquals(NativeShellRunner.RETURN_CODE_OK, returnCode);
-        assertEquals(NativeShellRunner.RETURN_CODE_OK, bashScriptEngine.get(NativeShellScriptEngine.EXIT_VALUE_BINDING_NAME));
+        assertEquals(NativeShellRunner.RETURN_CODE_OK,
+                     bashScriptEngine.get(NativeShellScriptEngine.EXIT_VALUE_BINDING_NAME));
         assertEquals("aString 42 42.0" + nl, scriptOutput.toString());
     }
 
@@ -96,7 +129,8 @@ public class CmdScriptEngineTest {
         bindings.put("string", "aString");
 
         assertEquals(NativeShellRunner.RETURN_CODE_OK, bashScriptEngine.eval("echo %string%", bindings));
-        assertEquals(NativeShellRunner.RETURN_CODE_OK, bashScriptEngine.eval(new StringReader("echo %string%"), bindings));
+        assertEquals(NativeShellRunner.RETURN_CODE_OK,
+                     bashScriptEngine.eval(new StringReader("echo %string%"), bindings));
         assertEquals("aString" + nl + "aString" + nl, scriptOutput.toString());
     }
 
@@ -110,7 +144,8 @@ public class CmdScriptEngineTest {
         context.setErrorWriter(scriptError);
 
         assertEquals(NativeShellRunner.RETURN_CODE_OK, bashScriptEngine.eval("echo %string%", context));
-        assertEquals(NativeShellRunner.RETURN_CODE_OK, bashScriptEngine.eval(new StringReader("echo %string%"), context));
+        assertEquals(NativeShellRunner.RETURN_CODE_OK,
+                     bashScriptEngine.eval(new StringReader("echo %string%"), context));
         assertEquals("aString" + nl + "aString" + nl, scriptOutput.toString());
     }
 
@@ -134,7 +169,8 @@ public class CmdScriptEngineTest {
         }
 
         assertEquals(NativeShellRunner.RETURN_CODE_OK, bashScriptEngine.eval(largeScript));
-        assertEquals(NativeShellRunner.RETURN_CODE_OK, bashScriptEngine.get(NativeShellScriptEngine.EXIT_VALUE_BINDING_NAME));
+        assertEquals(NativeShellRunner.RETURN_CODE_OK,
+                     bashScriptEngine.get(NativeShellScriptEngine.EXIT_VALUE_BINDING_NAME));
         assertTrue(scriptOutput.toString().contains("aString4999"));
     }
 }
