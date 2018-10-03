@@ -20,12 +20,12 @@ public class Shell implements NativeShell {
 
     @Override
     public String getInstalledVersionCommand() {
-        return "Not available";
+        return "1.0";
     }
 
     @Override
     public String getMajorVersionCommand() {
-        return "Not available";
+        return "1.0";
     }
 
     @Override
