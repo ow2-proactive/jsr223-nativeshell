@@ -23,8 +23,12 @@ public class Shell implements NativeShell {
             if( shebangLine.startsWith(SHEBANG_PREFIX) && shebangLine.length() > SHEBANG_PREFIX.length()) {
                 final String pathToInterpreter = shebangLine.substring(SHEBANG_PREFIX.length());
                 final File interpreter = new File(pathToInterpreter);
-                if (!interpreter.exists() || interpreter.isDirectory()) {
+                if (!interpreter.exists()) {
                     throw new ScriptException(String.format("Interpreter '%s' does not exist on the node.", pathToInterpreter));
+                } else if (interpreter.isDirectory()){
+                    throw new ScriptException(String.format("Path '%s' points to the directory.", pathToInterpreter));
+                } else if (!interpreter.canExecute()){
+                    throw new ScriptException(String.format("Interpreter '%s' cannot be executed.", pathToInterpreter));
                 }
             } else {
                 throw new ScriptException("Incorrect shebang notation: " + shebangLine);
