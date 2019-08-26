@@ -31,7 +31,7 @@ public class Shell implements NativeShell {
                     throw new ScriptException(String.format("Interpreter '%s' cannot be executed.", pathToInterpreter));
                 }
             } else if (shebangLine.toLowerCase().contains("rexx")) {
-                // nothing to do
+                // nothing to do because I dont know how to check if Rexx interpreter exists
             } else {
                 throw new ScriptException("Incorrect shebang notation: " + shebangLine);
             }
