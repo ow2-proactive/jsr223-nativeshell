@@ -251,7 +251,7 @@ public class NativeShellRunner {
         try {
             File commandAsFile = File.createTempFile("jsr223nativeshell-", nativeShell.getFileExtension());
             commandAsFile.setExecutable(true);
-            IOUtils.writeStringToFile(command, commandAsFile);
+            IOUtils.writeStringToFile(command + System.lineSeparator(), commandAsFile);
             return commandAsFile;
         } catch (IOException e) {
             throw new RuntimeException(e);
